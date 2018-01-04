@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Benchmarking Grids</title>
+    <!-- Bootstrap core CSS -->
+    <link href="../js/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <!--<link rel="stylesheet" href="../js/libraries/kendoui/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="../js/libraries/kendoui/styles/kendo.material.min.css" />-->
+    <!--<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.material.min.css" />-->
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.default.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.621/styles/kendo.default.mobile.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://docs.handsontable.com/pro/bower_components/handsontable-pro/dist/handsontable.full.min.css">
+    
+    <link href="../css/starter-template.css" rel="stylesheet">  
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
+
+    <link href="../css/benchmarking.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #800000; border-color: #800000;">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#" style="color: #f2f2f2;">Benchmarking Grids</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li id="navkendoui" class="active1 nav-hover"><a href="#">Kendo UI</a></li>
+            <li id="navhandsontable" class="nav-hover"><a href="#">Handsontable</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" style="padding-top: 10px;">
+      <div id="contkendoui" class="">
+        <!--<div style="padding-bottom: 30px;">
+            <h4>Data en L&iacute;nea</h4>
+            <input id="online" checked="" data-role="switch" class="km-widget" type="checkbox">
+        </div>-->
+        <div class="box wide margin-bottom">
+            <!--<div id="refreshBtnContainer">
+              <a href="\\#" class="k-pager-refresh k-link k-button" title="Refresh"><span class="k-icon k-i-reload"></span></a>
+            </div>-->
+            <a href="#" class="k-button" id="save">Guardar acciones en grilla</a>
+            <a href="#" class="k-button" id="load">Cargar acciones en grilla</a>
+            <button id="btnSpreadSheet" type="button" class="btn btn-primary pull-right margin-left">Libro de Excel</button>
+            <button id="btnPivotGrid" type="button" class="btn btn-success pull-right">Tabla Din&aacute;mica</button>
+        </div>
+        <div id="kgrid1" class="margin-bottom"></div>
+        <div id="details"></div>
+        <script type="text/x-kendo-template" id="template">
+            <div id="details-container">
+                <h4>Nombre: #= ProductName #</h4>
+                <h4>Precio Unitario: #= UnitPrice #</h4>
+                <h4>Stock: #= UnitsInStock #</h4>
+                <h4>Activo: #= Discontinued #</h4>
+            </div>
+        </script>
+        <script type="x/kendo-template" id="page-template">
+          <div class="page-template">
+            <div class="header">
+              Exportacion Trafico y Evaluacion del Desempeno
+            </div>
+            <div class="watermark">CLARO - RED</div>
+            <div class="footer1">
+              Pagina #: pageNum # de #: totalPages #
+            </div>
+          </div>
+        </script>
+      </div>
+      <div id="conthandsontable" class="hidden">
+        <button id="export-file" class="intext-btn margin-bottom">Export como CSV</button>
+        <div id="handsontable"></div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container"> 
+        <p class="text-muted text-footer">Copyright 2017 Tr&aacute;fico y Evaluaci&oacute;n del Desempe&ntilde;o</p>
+      </div>
+    </footer>
+
+    <script src="../js/libraries/require/require.js"></script>
+    <script src="../js/configuration/config_require.js"></script>
+  </body>
+</html>
+
+<!-- Modal Spreadsheet-->
+<div class="modal fade" id="spreadsheet" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Libro de Excel</h4>
+      </div>
+      <div class="modal-body">
+        <div class="box wide">
+            <div class="box-col margin-bottom">
+                <form action="http://demos.telerik.com/kendo-ui/spreadsheet/Download" method="POST">
+                    <input type="hidden" id="download-data" name="data" />
+                    <input type="hidden" id="download-extension" name="extension" />
+                    <input type="submit" class="k-button download" data-extension=".xlsx" value="Guardar a Excel" />
+                    <input type="submit" class="k-button download" data-extension=".csv" value="Guardar a CSV" />
+                    <input type="submit" class="k-button download" data-extension=".txt" value="Guardar como Texto" />
+                    <input type="submit" class="k-button download" data-extension=".json" value="Guardar como JSON" />
+                </form>
+            </div>
+            <!--div class="box-col margin-bottom">
+                <input type="file" name="file" id="upload" />
+            </div>-->
+        </div>
+        <div id="kspreadsheet" class="margin-bottom" style="width: 100%;"></div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- Modal Pivot Grid-->
+<div class="modal fade" id="pivotgrid" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Tabla Din&aacute;mica</h4>
+      </div>
+      <div class="modal-body">
+        <button id="exportExcelPGrid" class="k-button k-button-icontext hidden-on-narrow"><span class="k-icon k-i-excel"></span>Exportar a Excel</button>
+        <button id="exportPdfPGrid" class="k-button k-button-icontext hidden-on-narrow"><span class="k-icon k-i-pdf"></span>Exportar a PDF</button>
+        <div id="kpivotconfigurator" class="hidden-on-narrow"></div>
+        <div id="kpivotgrid" class="hidden-on-narrow"></div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  require(['benchmarking'], function(application) {
+     application.init();               
+  });
+
+</script>
