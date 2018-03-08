@@ -1,2 +1,2 @@
-# benchmarking_grids
+# Benchmarking Grid Popular JS Libraries
 Benchmarking Grids
