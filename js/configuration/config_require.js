@@ -1,7 +1,7 @@
 requirejs.config({
     baseUrl: '../js/',
     paths: {
-      'jquery': 'libraries/jquery/jquery-1.9.1.min',
+      'jquery': 'libraries/jquery/jquery-3.2.1.min',
       'bootstrap': 'libraries/bootstrap/js/bootstrap.min',
       'benchmarking': 'benchmarking',
       'jszip': 'libraries/kendoui/js/jszip.min',
