@@ -3,6 +3,8 @@ This is a small and simple project about the comparison between two popular grid
 
 For building this project, I used the trial version of this libraries to show the main features I found necessary for my evaluation.
 
+This is a demo [Benchmarking Grid Libraries](http://gustavoramosm.pe.hu/benchmarking_grids/views/).
+
 ## About Project
 **These are the extra external libraries and examples I used, apart from my code:**
 * Require JS *(module loader)*.
