@@ -4,10 +4,11 @@ This is a small and simple project about the comparison between two popular grid
 For building this project, I used the trial version of this libraries to show the main features I found necessary for my evaluation.
 
 ## About Project
-**These are the extra libraries and examples I used:**
+**These are the extra external libraries and examples I used, apart from my code:**
 * Require JS *(module loader)*.
 * jQuery.
 * Boostrap.
+* Some styles from libraries I evaluated.
 * Locale JSON files.
 
 ## About me
